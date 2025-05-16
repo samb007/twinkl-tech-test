@@ -1,6 +1,6 @@
 import { it, describe, expect, Mock } from "vitest";
 import axios from "axios";
-import { fakePosts } from "@/test-helpers";
+import { fakePosts } from "../test-helpers";
 const { getPosts } = await import("./json-placeholder-service");
 
 vi.mock("axios", async () => {
