@@ -7,3 +7,10 @@ export const filterPostsByTitle = (
   if (!posts) return [];
   return posts.filter((post) => post.title.includes(search));
 };
+
+export const removeDeletedPosts = (
+  posts: Post[],
+  deletedPostsIds: number[]
+) => {
+  return posts.filter((post) => !deletedPostsIds.includes(post.id));
+};

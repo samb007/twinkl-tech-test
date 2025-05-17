@@ -32,14 +32,12 @@ describe("service", () => {
   });
 
   describe("deletePost", () => {
-    const fakeDeletePostData = { data: fakePosts[0] };
-
     it("should delete a post", async () => {
-      (axios.delete as Mock).mockReturnValue(fakeDeletePostData);
+      (axios.delete as Mock).mockReturnValue({ data: {} });
 
       const response = await deletePost(1);
 
-      expect(response).toEqual(fakePosts[0]);
+      expect(response).toEqual({});
     });
 
     it("should handle errors", async () => {
