@@ -11,6 +11,8 @@ const App = () => {
   const [deletedPostsIds, setDeletedPostsIds] = useState<number[]>([]);
   const query = useQuery({ queryKey: ["posts"], queryFn: getPosts });
 
+  // Filtering posts on the client side to mimic an api that actually updates data.
+  // In a real world scenario, you would want to use a mutation to delete or filter the posts
   const filteredPosts = useMemo(() => {
     const filteredPostsByTitle = filterPostsByTitle(query.data, titleFilter);
     const posts = removeDeletedPosts(filteredPostsByTitle, deletedPostsIds);
