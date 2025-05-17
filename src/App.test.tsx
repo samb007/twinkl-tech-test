@@ -39,7 +39,9 @@ describe("App", () => {
 
   it("should display posts when fetched successfully", async () => {
     (getPosts as Mock).mockResolvedValue(fakePosts);
+
     renderAppWithQueryClient();
+
     await waitFor(() => {
       expect(screen.getByText("Post 1")).toBeInTheDocument();
       expect(screen.getByText("Body 1")).toBeInTheDocument();
