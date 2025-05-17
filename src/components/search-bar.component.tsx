@@ -4,7 +4,7 @@ interface SearchBarProps {
 
 export const SearchBar = ({ setFilter }: SearchBarProps) => {
   return (
-    <div className="flex items-center justify-center w-full">
+    <div className="flex items-center justify-center w-full md:w-1/2 mb-2">
       <input
         type="text"
         placeholder="Search..."
