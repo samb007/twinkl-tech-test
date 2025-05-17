@@ -1,10 +1,11 @@
 import { it, describe, expect, Mock } from "vitest";
 import axios from "axios";
 import { fakePosts } from "../test-helpers";
+import { deletePost } from "./json-placeholder-service";
 const { getPosts } = await import("./json-placeholder-service");
 
 vi.mock("axios", async () => {
-  return { default: { get: vi.fn() } };
+  return { default: { get: vi.fn(), delete: vi.fn() } };
 });
 
 const fakePostData = {
@@ -18,10 +19,7 @@ describe("service", () => {
 
       const posts = await getPosts();
 
-      expect(posts).toEqual([
-        { userId: 1, id: 1, title: "Post 1", body: "Body 1" },
-        { userId: 2, id: 2, title: "Post 2", body: "Body 2" },
-      ]);
+      expect(posts).toEqual(fakePostData.data);
     });
 
     it("should handle errors", async () => {
@@ -30,6 +28,26 @@ describe("service", () => {
       });
 
       await expect(getPosts()).rejects.toThrow("Network error");
+    });
+  });
+
+  describe("deletePost", () => {
+    const fakeDeletePostData = { data: fakePosts[0] };
+
+    it("should delete a post", async () => {
+      (axios.delete as Mock).mockReturnValue(fakeDeletePostData);
+
+      const response = await deletePost(1);
+
+      expect(response).toEqual(fakePosts[0]);
+    });
+
+    it("should handle errors", async () => {
+      (axios.delete as Mock).mockImplementation(() => {
+        throw new Error("Network error");
+      });
+
+      await expect(deletePost(1)).rejects.toThrow("Network error");
     });
   });
 });
